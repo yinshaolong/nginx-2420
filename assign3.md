@@ -17,8 +17,8 @@
 `sudo mkdir -p /web/html/nginx-2420` 
 
 - create a new index.html file: 
-
 `sudo vim /web/html/nginx-2420/index.html`
+
 - hit “i” on the keyboard and add the following to the index.html file:
 
 ```html
@@ -65,7 +65,8 @@ configuration file:
 server { 
     listen 80; 
     root /web/html/nginx-2420;
- }```
+ }
+ ```
 - save the file: `esc :wq`
 - edit the nginx configuration file:
 `sudo vim /etc/nginx/nginx.conf`
