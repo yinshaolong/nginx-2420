@@ -20,7 +20,6 @@
 `sudo vim /web/html/nginx-2420/index.html`
 
 - hit “i” on the keyboard and add the following to the index.html file:
-
 ```html
 <!DOCTYPE html>
 <html lang="en">
