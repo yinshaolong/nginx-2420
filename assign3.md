@@ -39,8 +39,6 @@
 ```
 6. exit vim after saving:
 ```esc :wq```
-<!-- 7.make conf.d directory in nginx
-```sudo mkdir /etc/nginx/conf.d``` -->
 
 7. make a sites-available directory in nginx:
 ```sudo mkdir /etc/nginx/sites-available```
@@ -65,11 +63,11 @@ server {
 15. create a symbolic link to the sites-enabled directory:
 ```sudo ln -s /etc/nginx/sites-available/nginx-2420.conf /etc/nginx/sites-enabled```
 
-13. start the nginx service:
+16. start the nginx service:
 ```sudo systemctl start nginx```
-15. enable the nginx service to run at boot:
+17. enable the nginx service to run at boot:
 ```sudo systemctl enable nginx```
-16. get the ip address of the droplet (the number following right after inet, excluding the /20 under eth0):
+18. get the ip address of the droplet (the number following right after inet, excluding the /20 under eth0):
 ```ip addr show```
-17. open a web browser and type in the ip address of the droplet (ex: http://64.23.250.17)
+19. open a web browser and type in the ip address of the droplet (ex: http://64.23.250.17)
 
