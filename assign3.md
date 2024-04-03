@@ -13,7 +13,7 @@
 
 - if asked “Proceed with installation? [Y/n]”, type “Y” and press enter 
 
-- make the project root directory:
+- make the project root directory (name of directories must be as follows based on instructions):
 `sudo mkdir -p /web/html/nginx-2420` 
 
 - create a new index.html file: 
@@ -53,9 +53,9 @@
 ```
 
 - exit vim after saving: `esc :wq`
-- make a sites-available directory in nginx:
+- make a sites-available directory in nginx (mandatory naming):
 `sudo mkdir /etc/nginx/sites-available`
-- make a sites-enabled directory in nginx:
+- make a sites-enabled directory in nginx (mandatory naming):
 `sudo mkdir /etc/nginx/sites-enabled`
 -  make a new configuration file in the sites-available directory (name of file must be based on instructions: nginx-2420):
 `sudo vim /etc/nginx/sites-available/nginx-2420.conf`
