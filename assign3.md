@@ -57,7 +57,7 @@
 `sudo mkdir /etc/nginx/sites-available`
 - make a sites-enabled directory in nginx:
 `sudo mkdir /etc/nginx/sites-enabled`
--  make a new configuration file in the sites-available directory (name of file must be nginx-2420):
+-  make a new configuration file in the sites-available directory (name of file must be based on instructions: nginx-2420):
 `sudo vim /etc/nginx/sites-available/nginx-2420.conf`
 -  hit “i” on the keyboard and add the following to the
 configuration file:
