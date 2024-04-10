@@ -2,7 +2,8 @@
 
 # Enabling the firewall on the server
 - Update the system with the latest packages.
-`sudo pacman -Syu`
+
+  `sudo pacman -Syu`
     - if prompted, follow instructions to update the system (e.g. type “Y” and press enter)
 
 
