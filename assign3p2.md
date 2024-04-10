@@ -88,7 +88,6 @@ hello-server ` in the terminal.
 - Hit “i” (insert mode) on the keyboard and add the following to the service file
     - ExecStart is the path to the binary file (in our case it is the backend binary file `hello-server`).
     - WantedBy is the most frequently used way to state how a unit should be enabled.
-    - Restart is a directive that tells systemd to restart the service if it fails.
 
 :
 ```bash
@@ -122,25 +121,58 @@ WantedBy=multi-user.target
 
 
 # Editing the Nginx configuration file
-- Edit the Nginx sites enabled configuration file.
+- Edit the Nginx sites-available configuration file.
 `sudo vim /etc/nginx/sites-available/nginx-2420.conf`
 
-- hit "i" to enter insert mode and replace the contents of the file with the following
+- hit "i" (to enter insert mode) and replace the contents of the file with the following:
      - the proxy_pass is passing the request to the /hey and /echo locations to the backend server running on the droplet:
-```bash
+```
 server {
     listen 80;
     root /web/html/nginx-2420;
 
     location /hey {
-        proxy_pass http://127.0.0.1:8080; #equivalent of local host
+        proxy_pass http://127.0.0.1:8080; 
     }
 
     location /echo {
-        proxy_pass http://127.0.01:8080; #equivalent of local host
+        proxy_pass http://127.0.01:8080; 
     }
 }
 ```
 
 - Save the file by pressing `esc` (to leave insert mode) then `:wq` (to write and quit) and hit `enter`.
 `esc :wq`
+
+- Start the Nginx service if it is not already running:
+`sudo systemctl start nginx`
+    - Else, restart the Nginx service:
+    `sudo systemctl restart nginx`
+
+- Check the status of the Nginx service to make sure it is active
+    - it should say `Active: active (running) since <date>` if it was successful.
+`sudo systemctl status nginx`
+e.g. `Active: active (running) since Wed 2024-04-10 17:25:22 UTC; 9min ago`
+
+
+# Testing the backend with curl
+- On the host machine, use powershell to run the following command to test the backend server:
+    - If successful, it should show `Hey there` in the terminal (put your droplet's IP address in place of `<ip-address>`).
+`curl http://<ip-address>/hey`
+e.g. `curl http://64.23.250.17/hey`
+
+- On the host machine, use powershell to run the following command to test the backend server:
+    - If successful, it should show `{"message": "Hello from your server"}` in the terminal.
+    - replace the `<ip-address>` with your droplet's IP address.
+```bash
+curl -X POST -H "Content-Type: application/json" \
+  -d '{"message": "Hello from your server"}' \
+  http://<ip-address>/echo
+```
+  
+e.g.
+```bash
+curl -X POST -H "Content-Type: application/json" \
+  -d '{"message": "Hello from your server"}' \
+  http://64.23.250.17/echo
+``` 
