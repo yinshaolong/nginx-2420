@@ -3,7 +3,7 @@
 # Enabling the firewall on the server
 - Update the system with the latest packages.
 
-  ```
+  ```bash
   sudo pacman -Syu
   ```
     - if prompted, follow instructions to update the system (e.g. type “Y” and press enter)
@@ -13,14 +13,14 @@
     - UFW is a fire wall program that manages nftables or iptables.
     - if prompted, follow instructions to update the system (e.g. type “Y” and press enter)
 
-  ```
+  ```bash
   sudo pacman -S ufw
   ```
 
 - Enable the UFW service
     - The following command will start the UFW service (--now) and enable it to start on boot.
 
-  ```
+  ```bash
   sudo systemctl enable --now ufw.service
   ```
 
@@ -28,7 +28,7 @@
     - The following command will show the status of UFW.
     - it should return inactive if UFW was just installed.
 
-  ```
+  ```bash
   sudo ufw status verbose
   ```
 
@@ -47,10 +47,9 @@ or
 sudo ufw allow 22
 ```
 - You can limit the rate of ssh connections to prevent brute force attacks with the following command (6 attempts in 30 seconds will deny an incoming address):
-
-  ```
-  sudo ufw limit SSH
-  ```
+```bash
+sudo ufw limit SSH
+```
 
 - Allow http connections since we will be using a web server with either of the following commands (they are equivalent since HTTP's default port is 80):
 ```bash
@@ -62,14 +61,13 @@ sudo ufw allow 80
 ```
 
 - Turn on firewall now that some of the rules are set:
-
-  ```
+```bash
   sudo ufw enable
-  ```
+```
 
 - Check the status of the firewall to ensure that everything is working:
 
- ```
+ ```bash
  sudo ufw status verbose
  ```
 
@@ -82,11 +80,12 @@ sudo ufw allow 80
 - On the host machine, after the `hello-server` file has been downloaded, we use SFTP (Secure File Transfer Protocol) to transfer the `hello-server` file from our host-machine to the droplet.
     - first use the following command to connect to your remote droplet using the sftp utility (replace `user` with your username and `ip-address` with your droplet's IP address).
         - If it was successful, it should say ` Connected to <ip-address>`
-  ```
+ ```bash
   sftp -i ~/.ssh/do-key user@ip-address
-  ``` 
+ ```
 
-  e.g. ```
+  e.g. 
+  ```bash
   sftp -i ~/.ssh/do-key shaol@64.23.250.17
   ```
 
@@ -101,7 +100,7 @@ sudo ufw allow 80
     - If successful, it should say `Uploading hello-server to /home/<user>/hello-server
 hello-server ` in the terminal.
 
-  ```
+  ```bash
   put hello-server
   ```
 
@@ -264,7 +263,9 @@ should display:
   curl http://<ip-address>/hey
   ```
 
-  e.g. `curl http://64.23.250.17/hey`
+  e.g. ```bash
+  curl http://64.23.250.17/hey
+  ```
 
 - On the host machine, use powershell to run the following command to test the backend server:
     - If successful, it should show `{"message": "Hello from your server"}` in the terminal.
