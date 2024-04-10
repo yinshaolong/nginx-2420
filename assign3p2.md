@@ -8,6 +8,7 @@
 
 - Download the package UFW (Uncomplicated Firewall)
     - UFW is a fire wall program that manages nftables or iptables.
+    - if prompted, follow instructions to update the system (e.g. type “Y” and press enter)
 `sudo pacman -S ufw`
 
 - Enable the UFW service
@@ -28,12 +29,15 @@ sudo ufw default allow outgoing
 - Allow SSH connections on port 22 with either of the following commands (they are equivalent since SSH's default port is 22):
 ```bash
 sudo ufw allow SSH
+```
+or
+```bash
 sudo ufw allow 22
 ```
 - You can limit the rate of ssh connections to prevent brute force attacks with the following command (6 attempts in 30 seconds will deny an incoming address):
 `sudo ufw limit SSH`
 
-- Allow http connections since we will be using a web server with either of the following commands (they are equivalent since SSH's default port is 22):
+- Allow http connections since we will be using a web server with either of the following commands (they are equivalent since HTTP's default port is 80):
 ```bash
 sudo ufw allow http
 ```
@@ -47,3 +51,32 @@ sudo ufw allow 80
 
 - Check the status of the firewall to ensure that everything is working:
 `sudo ufw status verbose`
+
+
+# Placing backend binary on the droplet
+- On the host machine, download the `hello-server` file from the following link: `https://gitlab.com/cit2420/2420_notes_w24/-/blob/main/attachments/hello-server?ref_type=heads`
+
+- On the host machine, after the `hello-server` file has been downloaded, we use SFTP (Secure File Transfer Protocol) to transfer the `hello-server` file from our host-machine to the droplet.
+    - first use the following command to connect to your remote droplet using the sftp utility (replace `user` with your username and `ip-address` with your droplet's IP address).
+        - If it was successful, it should say ` Connected to <ip-address>`
+`sftp -i ~/.ssh/do-key user@ip-address` 
+e.g. `sftp -i ~/.ssh/do-key shaol@64.23.250.17`
+
+- change directories (cd command) to the directory where `hello-server` is located.
+    - assuming the `hello-server` file hasn't been moved from `~/Downloads` directory the command would be:
+`cd ~/Downloads`
+
+- After connecting to the droplet, use the following command to transfer the `hello-server` file to the droplet (default is the droplet's home directory).
+    - If successful, it should say `Uploading hello-server to /home/<user>/hello-server
+hello-server ` in the terminal.
+`put hello-server`
+
+- After the file has been transferred, exit the sftp utility by typing `exit` in the terminal.
+
+- Make a binary directory in the nginx-2420 directory from part 1.
+`sudo mkdir -p /web/html/nginx-2420/bin` 
+
+
+- move (mv) `hello-server` to the `/web/html/nginx-2420/bin` directory of the arch linux server.
+`sudo mv hello-server /web/html/nginx-2420/bin`  
+
