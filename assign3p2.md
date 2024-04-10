@@ -1,7 +1,7 @@
 # Firewall
 
 # Enabling the firewall on the server
-- Update the system with the latest packages.
+- Update the droplet's system with the latest packages.
 
   ```bash
   sudo pacman -Syu
