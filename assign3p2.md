@@ -80,3 +80,67 @@ hello-server ` in the terminal.
 - move (mv) `hello-server` to the `/web/html/nginx-2420/bin` directory of the arch linux server.
 `sudo mv hello-server /web/html/nginx-2420/bin`  
 
+
+# Creating a new service file to run the backend
+- Make a service file in the `/etc/systemd/system` directory (name can be anything, but we will default to - hello-server.service).
+`sudo vim /etc/systemd/system/hello-server.service`
+
+- Hit “i” (insert mode) on the keyboard and add the following to the service file
+    - ExecStart is the path to the binary file (in our case it is the backend binary file `hello-server`).
+    - WantedBy is the most frequently used way to state how a unit should be enabled.
+    - Restart is a directive that tells systemd to restart the service if it fails.
+
+:
+```bash
+[Unit] 
+Description=Hello Server Service
+
+[Service]
+ExecStart=/web/html/nginx-2420/bin/hello-server 
+
+[Install]
+WantedBy=multi-user.target
+```
+
+- Save the file by pressing `esc` (to leave insert mode) then `:wq` (to write and quit) and hit `enter`.
+`esc :wq`
+
+- Reload the systemd daemon to read the new service file.
+`sudo systemctl daemon-reload`
+
+- Start the service.
+`sudo systemctl start hello-server.service`
+
+- Enable the service to start on boot.
+    - (If it was successful should say `Created symlink /etc/systemd/system/multi-user.target.wants/hello-server.service → /etc/systemd/system/hello-server.service.`)
+`sudo systemctl enable hello-server.service`
+
+- Check the status of the service to ensure that it is running.
+`sudo systemctl status hello-server.service`
+    - If it was successful, it should say `Active: active (running) since <date>` 
+    e.g. `Active: active (running) since Wed 2024-04-10 07:03:58 UTC; 33s ago`
+
+
+# Editing the Nginx configuration file
+- Edit the Nginx sites enabled configuration file.
+`sudo vim /etc/nginx/sites-available/nginx-2420.conf`
+
+- hit "i" to enter insert mode and replace the contents of the file with the following
+     - the proxy_pass is passing the request to the /hey and /echo locations to the backend server running on the droplet:
+```bash
+server {
+    listen 80;
+    root /web/html/nginx-2420;
+
+    location /hey {
+        proxy_pass http://127.0.0.1:8080; #equivalent of local host
+    }
+
+    location /echo {
+        proxy_pass http://127.0.01:8080; #equivalent of local host
+    }
+}
+```
+
+- Save the file by pressing `esc` (to leave insert mode) then `:wq` (to write and quit) and hit `enter`.
+`esc :wq`
